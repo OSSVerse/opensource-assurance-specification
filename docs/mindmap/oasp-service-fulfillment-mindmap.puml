@@ -1,0 +1,45 @@
+@startmindmap
+* OASP Service Fulfillment and Reporting
+** Service Initiation
+*** Receive Order
+****  Receive order details (selected service packages, billing information, payment terms) for subscription or on-demand services
+***  Validate Order
+****  Verify order details, payment, and buyer credentials
+** Service Fulfillment
+***  Plan and Track
+****  Create a fulfillment plan, allocate resources, and track progress for each service package
+***  Execute Services
+****  Conduct assessments, remediation, or other services as defined in the service package
+****  Leverage internal tools, playbooks, and expertise
+****  Generate evidence and artifacts during the process
+***  Generate Deliverables
+****  Create reports, recommendations, or other deliverables based on the services performed
+****  Ensure deliverables meet quality standards and address buyer requirements
+** Reporting and Delivery
+***  Share Deliverables
+****  Deliver reports and other outputs to the buyer through appropriate channels (e.g., platform dashboard, secure download links)
+****  Use the /report API endpoint or other delivery mechanisms
+***  Provide Evidence and Artifacts
+****  Share supporting evidence and relevant artifacts with the buyer as specified in the service package or add-ons
+** Ongoing Support
+***  Address Inquiries
+****  Respond to buyer inquiries, clarifications, and support requests
+****  Utilize the /support API endpoint or other communication channels
+***  Monitor Usage
+****  Track the usage of services within subscription plans
+****  Alert buyers about approaching usage limits or plan renewals
+** Quotation and Negotiation (for on-demand services or custom packages)
+***  Provide Quotation
+****  Respond to buyer requests for quotation (RFQ) with detailed cost estimates
+****  Use the /quotation API endpoint or other communication channels
+***  Negotiate and Revise
+****  Engage in negotiation with the buyer to finalize the scope and pricing of services
+****  Revise quotations based on buyer feedback and finalize the agreement
+** Renewal and Expansion
+***  Prompt Renewal
+****  Initiate discussions with buyers about renewing their subscriptions before expiration
+***  Offer Upgrades
+****  Suggest upgrades to higher-tier plans or offer new service packages and add-ons
+***  Expand Services
+****  Identify opportunities to provide additional value and expand the scope of services offered to existing subscribers
+@endmindmap
