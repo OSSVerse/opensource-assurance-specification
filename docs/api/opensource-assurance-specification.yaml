@@ -506,6 +506,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+  /support:
+    post:
+      tags:
+        - Beckn Provider Platform (BPP)
+      summary: Contact support
+      description: BAP requests support or assistance.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - context
+                - message
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - type: object  # Ensure this is defined
+                      properties:
+                        action:
+                          type: string  #  Define the type of the property
+                          enum:
+                            - support
+                message:
+                  type: object
+                  properties:
+                    support:
+                      $ref: '#/components/schemas/Support'
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+  
            
 components:
   securitySchemes:
