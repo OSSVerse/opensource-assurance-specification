@@ -9,23 +9,21 @@ security:
 paths:
   /search:
     post:
-      tags:
-        - Beckn Provider Platform (BPP)
-        - Beckn Gateway (BG)
       summary: Search for open source assurance services and discover OASPs
       description: |
         BAP sends a search request with its intent to find specific open source assurance services 
         and the OASPs that offer them. The BPP may respond with an `on_search` callback.
+      tags:
+        - Beckn Provider Platform (BPP)
       requestBody:
-       
+        required: true
         content:
           application/json:
             schema:
-              type: object  # Directly define the schema here
+              type: object
               required:
                 - context
                 - message
-            
               properties:
                 context:
                   allOf:
@@ -44,8 +42,26 @@ paths:
                     - intent
                   properties:
                     intent:
-                      $ref: '#/components/schemas/Intent'
-        
+                      type: object
+                      properties:
+                        descriptor:  # Add descriptor for general intent
+                          $ref: '#/components/schemas/Descriptor'
+                        provider:  # Add provider if known
+                          $ref: '#/components/schemas/Provider'
+                        fulfillment:  # Add fulfillment details if applicable
+                          $ref: '#/components/schemas/Fulfillment'
+                        payment:  # Add payment preferences if applicable
+                          $ref: '#/components/schemas/Payment'
+                        category:
+                          $ref: '#/components/schemas/Category'
+                        offer:  # Add offer details if applicable
+                          $ref: '#/components/schemas/Offer'
+                        item:
+                          $ref: '#/components/schemas/Item'
+                        tags:  # Add tags for additional criteria
+                          type: array
+                          items:
+                            $ref: '#/components/schemas/TagGroup' 
       responses:
         '200':
           description: Acknowledgement of message received.
@@ -109,14 +125,63 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /init:
-     post:
+  /update:
+    post:
       tags:
         - Beckn Provider Platform (BPP)
-      summary: Initialize an order for an open source assurance service
+      summary: Update an existing order or submit a counter-offer
       description: |
-        BAP initiates an order for a selected service from an OASP by providing 
-        necessary details. The BPP may respond with an `on_init` callback.
+        BAP updates an existing order or submits a counter-offer to an OASP's quotation.
+        To submit a counter-offer, include a `quote` object in the `order` object within the request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - context
+                - message
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - update
+                      required:
+                        - action
+                message:
+                  type: object
+                  required:
+                    - order
+                  properties:
+                    order:
+                      $ref: '#/components/schemas/Order' 
+      responses:
+        '200':
+          description: Acknowledgement of message received.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ack'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /init:
+    post:
+      tags:
+        - Beckn Provider Platform (BPP)
+      summary: Initialize the fulfillment of an order
+      description: |
+        BPP initiates the fulfillment process of an order, communicating the necessary details to the OASP.
+        This applies to both one-time orders and the initial order within a subscription.
       requestBody:
         required: true
         content:
@@ -144,7 +209,7 @@ paths:
                     - order
                   properties:
                     order:
-                      $ref: '#/components/schemas/Order'
+                      $ref: '#/components/schemas/Order'  # Order object with fulfillment details
       responses:
         '200':
           description: Acknowledgement of message received.
@@ -162,10 +227,9 @@ paths:
     post:
       tags:
         - Beckn Provider Platform (BPP)
-      summary: Confirm an order for an open source assurance service
+      summary: Confirm an order
       description: |
-        BAP confirms the order for a selected service with an OASP, 
-        including payment and other necessary details. The BPP may respond with an `on_confirm` callback.
+        BAP confirms an order by agreeing to the terms and conditions of the order, including payment and fulfillment details.
       requestBody:
         required: true
         content:
@@ -193,7 +257,7 @@ paths:
                     - order
                   properties:
                     order:
-                      $ref: '#/components/schemas/Order'
+                      $ref: '#/components/schemas/Order'  # Order object with confirmed details
       responses:
         '200':
           description: Acknowledgement of message received.
@@ -211,44 +275,237 @@ paths:
     post:
       tags:
         - Beckn Provider Platform (BPP)
-      summary: Get the status of an open source assurance service order
-      description: BAP requests the latest status of an order from the OASP.
+      summary: Get the status of an order
+      description: |
+        BAP requests the latest status of an order.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - context
+                - message
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - status
+                      required:
+                        - action
+                message:
+                  type: object
+                  required:
+                    - order_id
+                  properties:
+                    order_id:
+                      type: string
+                      description: ID of the order for which the status is requested.
+      responses:
+        '200':
+          description: Acknowledgement of message received.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ack'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /subscribe:
+    post:
+      tags:
+        - Beckn Provider Platform (BPP)
+      summary: Subscribe to an open-source assurance service plan
+      description: |
+        BAP initiates a subscription to a service plan offered by an OASP.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - context
+                - message
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - subscribe
+                      required:
+                        - action
+                message:
+                  type: object
+                  required:
+                    - order
+                  properties:
+                    order:
+                      $ref: '#/components/schemas/Order'  # Order object with subscription details
+      responses:
+        '200':
+          description: Acknowledgement of message received.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ack'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+  /track:
+    post:
+      tags:
+        - Beckn Provider Platform (BPP)
+      summary: Track the progress of an order
+      description: |
+        BAP requests tracking information for an active order.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - context
+                - message
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - track
+                      required:
+                        - action
+                message:
+                  type: object
+                  required:
+                    - order_id
+                  properties:
+                    order_id:
+                      type: string
+                      description: ID of the order to track.
+      responses:
+        '200':
+          description: Acknowledgement of message received.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ack'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /cancel:
+    post:
+      tags:
+        - Beckn Provider Platform (BPP)
+      summary: Cancel an open source assurance service order
+      description: |
+        BAP requests cancellation of an active open source assurance service order.
       requestBody:
         content:
           application/json:
             schema:
               type: object
+              required:
+                - context
+                - message
               properties:
                 context:
                   allOf:
                     - $ref: '#/components/schemas/Context'
-                    - properties:
+                    - type: object
+                      properties:
                         action:
+                          type: string  # Specify the type as string
                           enum:
-                            - status
-                          type: string
+                            - cancel
+                      required:
+                        - action
                 message:
                   type: object
                   properties:
                     order_id:
-                      type: string
+                      $ref: '#/components/schemas/Order/properties/id'
+                    cancellation_reason_id:
+                      $ref: '#/components/schemas/Option/properties/id'
+                    descriptor:
+                      $ref: '#/components/schemas/Descriptor'
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'      
+
+  /rating:
+    post:
+      tags:
+        - Beckn Provider Platform (BPP)
+      summary: Provide a rating for an entity in OSSVerse
+      description: |
+        BAP submits a rating for an entity, such as an OASP, a service package, or a specific fulfillment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
               required:
                 - context
                 - message
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - type: object
+                      properties:
+                        action:
+                          type: string
+                          enum:
+                            - rating
+                      required:
+                        - action
+                message:
+                  type: object
+                  required:
+                    - rating
+                  properties:
+                    rating:
+                      $ref: '#/components/schemas/Rating'  # Rating object with details
       responses:
         '200':
+          description: Acknowledgement of message received.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Ack'
-          description: Acknowledgement of message received after successful validation of schema and signature
         default:
+          description: Unexpected error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Unexpected error
-      
            
 components:
   securitySchemes:
@@ -748,6 +1005,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TagGroup'
+        start_time:
+          type: string
+          format: date-time
+          description: Estimated start time of the fulfillment.
+        end_time:
+          type: string
+          format: date-time
+          description: Estimated end time of the fulfillment.
+          
     FulfillmentState:
       description: Describes the state of fulfillment
       type: object
@@ -1219,6 +1485,10 @@ components:
         sla_id:
           type: string
           description: ID of the SLA applicable to this order.
+        subscription_id:
+          type: string
+          description: ID of the Subscription this order belongs to (if applicable).
+
     Organization:
       description: An organization. Usually a recognized business entity.
       type: object
@@ -1683,7 +1953,11 @@ components:
           type: string
           enum: ["INITIAL", "COUNTER_OFFERED", "REVISED", "ACCEPTED", "REJECTED"]
           description: Current state of the quotation.
-        
+        is_negotiable:
+          type: boolean
+          description: Indicates whether the quotation is open to negotiation.
+          default: true
+              
     Rating:
       description: Describes the rating of an entity
       type: object
@@ -2014,10 +2288,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Contact"  # Reference the Contact object      
-        assurance_level:
-          type: integer
-          enum: [1, 2, 3]
-          description: The level of assurance provided by this SLA (e.g., 1 - Basic, 2 - Standard, 3 - Premium).
         escalation_procedure:
           type: array
           description: Procedure for escalating issues or delays.
@@ -2115,7 +2385,11 @@ components:
           items:
             type: string
           description: IDs of the categories this service package belongs to.
-        
+        assurance_level:  # Assurance level associated with the ServicePackage
+          type: integer
+          enum: [1, 2, 3]
+          description: The level of assurance provided by this package.
+            
 
     
     
