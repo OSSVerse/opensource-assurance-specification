@@ -539,7 +539,348 @@ paths:
       responses:
         default:
           $ref: '#/paths/~1init/post/responses/default'
+
   
+
+  /on_search:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP responds to a search request with a catalog of relevant services and providers.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_search
+                message:
+                  type: object
+                  properties:
+                    catalog:
+                      $ref: '#/components/schemas/Catalog'  # Includes providers, categories, items, etc.
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+
+  /on_select:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP sends a quote or order confirmation in response to a select request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_select
+                message:
+                  type: object
+                  properties:
+                    order:
+                      $ref: '#/components/schemas/Order'  # Order object with quote or confirmation details
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+
+  /on_update:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP responds to an update request, typically after a counter-offer or order modification.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_update
+                message:
+                  type: object
+                  properties:
+                    order:
+                      $ref: '#/components/schemas/Order'  # Updated order object
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+  /on_init:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP confirms that the fulfillment process has been initiated for an order.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_init
+                message:
+                  type: object
+                  properties:
+                    order:
+                      $ref: '#/components/schemas/Order'  # Order object with updated status
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+  
+  /on_confirm:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP confirms that an order has been successfully created and confirmed.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_confirm
+                message:
+                  type: object
+                  properties:
+                    order:
+                      $ref: '#/components/schemas/Order'  # Confirmed order object
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+
+  /on_status:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP provides the updated status of an order in response to a status request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_status
+                message:
+                  type: object
+                  properties:
+                    order:
+                      $ref: '#/components/schemas/Order'  # Order object with updated status information
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+  /on_subscribe:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP confirms or rejects a subscription request initiated by the buyer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_subscribe
+                message:
+                  type: object
+                  properties:
+                    subscription:  
+                      $ref: '#/components/schemas/Subscription'  # Subscription object with details
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+  /on_track:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP provides tracking information for an active order in response to a track request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_track
+                message:
+                  type: object
+                  properties:
+                    tracking:
+                      $ref: '#/components/schemas/Tracking'  # Tracking information for the order
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+  
+  /on_cancel:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP confirms the cancellation of an order or provides a reason why it could not be cancelled.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_cancel
+                message:
+                  type: object
+                  properties:
+                    order:  # Order object with updated status or cancellation details
+                      $ref: '#/components/schemas/Order'
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+
+  /on_rating:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP acknowledges the receipt of a rating or provides feedback on the rating process.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_rating
+                message:
+                  type: object
+                  properties:
+                    feedback_form:  # (Optional) A form for the user to provide additional feedback
+                      description: A feedback form to allow the user to provide additional information on the rating provided
+                      allOf:
+                        - $ref: '#/components/schemas/XInput'
+                error:  # (Optional) Error information if there was an issue with the rating
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
+
+  /on_support:
+    post:
+      tags:
+        - Beckn Application Platform (BAP)
+      description: BPP responds to a support request, providing contact information or initiating a support process.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                context:
+                  allOf:
+                    - $ref: '#/components/schemas/Context'
+                    - properties:
+                        action:
+                          enum:
+                            - on_support
+                message:
+                  type: object
+                  properties:
+                    support:
+                      $ref: '#/components/schemas/Support'  # Support response information
+                error:
+                  $ref: '#/components/schemas/Error'
+              required:
+                - context
+      responses:
+        default:
+          $ref: '#/paths/~1init/post/responses/default'
            
 components:
   securitySchemes:
@@ -548,6 +889,9 @@ components:
       in: header
       name: Authorization
       description: 'Signature of message body using BAP or BPP subscriber''s signing public key. <br/><br/>Format:<br/><br/><code>Authorization : Signature keyId="{subscriber_id}|{unique_key_id}|{algorithm}",algorithm="ed25519",created="1606970629",expires="1607030629",headers="(created) (expires) digest",signature="Base64(signing string)"</code>'
+
+
+
   schemas:
     Ack:
       description: 'Describes the acknowledgement sent in response to an API call. If the implementation uses HTTP/S, then Ack must be returned in the same session. Every API call to a BPP must be responded to with an Ack whether the BPP intends to respond with a callback or not. This has one property called `status` that indicates the status of the Acknowledgement.'
@@ -2423,8 +2767,3 @@ components:
           type: integer
           enum: [1, 2, 3]
           description: The level of assurance provided by this package.
-            
-
-    
-    
-     
