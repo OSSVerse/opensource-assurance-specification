@@ -1,0 +1,27 @@
+site_name: opensource-assurance-specification
+plugins:
+  - search
+  - neoteroi.mkdocsoad:
+      use_pymdownx: true
+      examples: false 
+      
+markdown_extensions:
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_css:
+  - css/neoteroi.mkdocsoad.css   
+
+nav:
+    - Home: index.md
+    - Understanding OSSVerse: concepts.md
+    - API Reference: 
+        - API Summary: api/api-spec-summary.md
+        - Schema Summary: schema/schema-summary.md
+        - API Specification: api/api-documentation.md
+    - Roadmap: roadmap.md
+    - Contributing: contributing.md
+
+theme: material
