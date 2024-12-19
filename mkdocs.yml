@@ -1,4 +1,9 @@
 site_name: opensource-assurance-specification
+site_description: >-
+  The Open Source Assurance specification defines standardized APIs and data models for secure and efficient interactions within the OSSVerse marketplace.
+# Repository
+repo_name: OSSVerse/opensource-assurance-specification
+repo_url: https://github.com/OSSVerse/opensource-assurance-specification
 plugins:
   - search
   - neoteroi.mkdocsoad:
