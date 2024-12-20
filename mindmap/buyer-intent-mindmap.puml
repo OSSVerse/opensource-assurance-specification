@@ -1,0 +1,27 @@
+@startmindmap
+* Intent/Search Flow in OSSVerse
+** Buyer Initiates Search
+*** Define Needs
+**** Specify the type of open source software needing assurance (e.g., application, library, AI model)
+**** Identify desired services (e.g., security audit, vulnerability assessment, code review)
+**** Determine any specific requirements (e.g., compliance standards, specific tools, budget)
+***  Search OSSVerse
+**** Use the OSSVerse platform to search for OASPs offering relevant services
+**** Filter by criteria such as service category, software type, OASP expertise, or pricing
+**  OASP Responds
+***  Receive Intent
+**** OASPs receive the buyer's search query and criteria
+***  Match Services
+**** OASPs identify matching service packages from their catalog
+**** Consider the buyer's specific needs and requirements
+***  Present Offerings
+**** OASPs present relevant service packages, subscription plans, and pricing information to the buyer
+** Buyer Evaluates and Selects
+***  Compare Options
+**** Buyer compares service packages and subscription plans from different OASPs
+**** Considers factors such as service scope, pricing, OASP expertise, and reputation
+***  Choose Service and Provider
+**** Buyer selects the most suitable service package and the OASP to engage with
+***  Proceed to Order or Subscription
+**** Buyer decides whether to proceed with an on-demand order or a subscription-based plan
+@endmindmap

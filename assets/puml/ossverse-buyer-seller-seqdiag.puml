@@ -1,0 +1,48 @@
+@startuml
+
+participant Buyer
+participant OSSVerse
+participant OASP
+
+Buyer -> OSSVerse: /search (search for services)
+activate OSSVerse
+OSSVerse -> OASP: /search (find matching services)
+activate OASP
+OASP -> OSSVerse: /on_search (return service catalog)
+deactivate OASP
+OSSVerse -> Buyer: /on_search (display services)
+deactivate OSSVerse
+
+Buyer -> OSSVerse: /select (select service and OASP)
+activate OSSVerse
+OSSVerse -> OASP: /select (request service)
+activate OASP
+OASP -> OSSVerse: /on_select (provide quote)
+deactivate OASP
+OSSVerse -> Buyer: /on_select (display quote)
+deactivate OSSVerse
+
+Buyer -> OSSVerse: /update (negotiate quote)
+activate OSSVerse
+OSSVerse -> OASP: /update (update order)
+activate OASP
+OASP -> OSSVerse: /on_update (respond to update)
+deactivate OASP
+OSSVerse -> Buyer: /on_update (display updated quote)
+deactivate OSSVerse
+
+Buyer -> OSSVerse: /confirm (confirm order)
+activate OSSVerse
+OSSVerse -> OASP: /confirm (confirm order with OASP)
+activate OASP
+OASP -> OSSVerse: /on_confirm (acknowledge confirmation)
+deactivate OASP
+OSSVerse -> Buyer: /on_confirm (order confirmed)
+deactivate OSSVerse
+
+OSSVerse -> OASP: /init (initiate fulfillment)
+activate OASP
+OASP -> OSSVerse: /on_init (acknowledge fulfillment initiation)
+deactivate OASP
+
+@enduml

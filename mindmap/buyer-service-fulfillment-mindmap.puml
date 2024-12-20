@@ -1,0 +1,56 @@
+@startmindmap
+* OSS Service Fulfillment: A Buyer's Journey
+** Discovery
+*** Buyer Needs
+**** Identify specific open source software and related services required (e.g., security audits, vulnerability assessments, code reviews, on-demand support)
+*** Marketplace Exploration (OSSVerse)
+**** Discover available Open Source Assurance Service Providers (OASPs) and their offerings
+*** OASP Evaluation
+**** Review OASP profiles, ratings, past projects, and service acquisition models
+** Plan Selection
+*** Service Acquisition Model
+**** Subscription-based
+***** Subscription Plans
+****** OASPs offer different subscription plans with varying service packages and pricing
+******* Plan Comparison
+******** Descriptor: Description of the plan and its features
+******** Price: Cost of the subscription
+******** Billing Period: Frequency of billing (e.g., monthly, annually)
+******** Service Packages: Specific service packages included (e.g., "Basic Security Audit," "Advanced Vulnerability Assessment")
+******** Add-ons: Optional additional services available (can be bundled or separate)
+****** Choose Plan
+******* Select the plan that best aligns with the buyer's needs and budget
+**** On-demand
+*****  Select and purchase individual services as needed
+** Order and Payment
+*** Initiate Order
+**** Select a plan or on-demand services and initiate an order
+***** Order Object
+****** Captures order details (selected service packages, billing information, payment terms)
+*** Payment Processing
+**** Complete payment
+** Service Delivery and Fulfillment
+*** Subscription Activation (for subscription-based model)
+**** OASP activates the subscription, granting access to services
+*** Service Consumption
+**** Utilize the open-source software and avail of the services included in the plan, including on-demand services if needed
+***** Service Package Tracking
+****** ServicePackage objects track usage and limits of specific service components
+*** Obtaining Deliverables
+**** Receive deliverables (e.g., reports, recommendations) in various formats as specified in the service package
+**** Access evidence (e.g., code snippets, screenshots, logs) supporting the findings in the deliverables
+**** Obtain artifacts (e.g., tools, scripts, remediation guides) relevant to the services provided
+*** Status Updates
+**** OASP sends status updates, notifying of changes to the subscription or service delivery
+*** Subscription Lifecycle Actions (for subscription-based model)
+**** Renewal
+***** Renew subscription before expiry, potentially choosing a different plan
+**** Cancellation
+***** Cancel subscription, potentially incurring cancellation fees or receiving a partial refund
+**** Upgrade/Downgrade
+** Feedback and Support
+*** Rating and Feedback
+**** Provide feedback on the OASP, software, or specific services
+*** Support Requests
+**** Initiate a support request if needed
+@endmindmap

@@ -1,0 +1,201 @@
+@startuml
+hide circle
+skinparam linetype ortho
+
+entity SubscriptionPlan {
+  * id
+  --
+  descriptor
+  price
+  billing_period
+  validity_period
+  renewal_terms
+  --
+  * service_packages (ServicePackage IDs)
+  * add_ons (AddOn IDs) 
+}
+
+entity ServicePackage {
+  * id
+  --
+  descriptor
+  limit
+  usage
+  unit
+  assurance_level
+  --
+  category_ids
+  add_on_id
+}
+
+entity Subscription {
+  * id
+  --
+  plan_id (SubscriptionPlan ID)
+  status
+  start_date
+  end_date
+  renewal_date
+  trial_period
+  cancellation_terms
+  --
+  * add_ons (AddOn IDs)
+  payment
+}
+
+entity Order {
+  * id
+  --
+  status
+  type
+  created_at
+  updated_at
+  --
+  provider_id (Provider ID)
+  * items (Item IDs)
+  * add_ons (AddOn IDs)
+  * offers (Offer IDs)
+  billing
+  * fulfillments (Fulfillment IDs)
+  cancellation
+  quote_id (Quotation ID)
+  payments
+  sla_id (SLA ID)
+  subscription_id (Subscription ID)
+}
+
+entity Fulfillment {
+  * id
+  --
+  type
+  rating
+  state_id (FulfillmentState ID)
+  tracking
+  --
+  customer
+  agent
+  contact
+  vehicle
+  stops
+  path
+  start_time
+  end_time
+}
+
+entity FulfillmentState {
+  * id
+  --
+  descriptor
+  updated_at
+  updated_by
+}
+
+entity Item {
+  * id
+  --
+  // ... other properties
+}
+
+entity SLA {
+  * id
+  --
+  // ... other properties like response_time, etc.
+}
+
+entity Provider {
+  * id
+  --
+  // ... other properties
+  * licenses (License IDs)
+}
+
+entity Quotation {
+  * id
+  --
+  price
+  breakup
+  ttl
+  version
+  state
+  is_negotiable
+}
+
+entity License {
+  * id
+  --
+  // ... other properties
+}
+
+entity Certificate {
+  * id
+  --
+  // ... other properties
+}
+
+entity Artifact {
+  * id
+  --
+  // ... other properties
+}
+
+entity Evidence {
+  * id
+  --
+  certificate_id (Certificate ID)
+  license_id (License ID)
+  * artifacts (Artifact IDs)
+  // ... other properties
+}
+
+entity Deliverable {
+  * id
+  --
+  // ... other properties
+  * evidence_ids (Evidence IDs)
+}
+
+entity Catalog {
+  * id
+  --
+  // ... other properties
+  * categories (Category IDs)
+}
+
+entity Category {
+  * id
+  --
+  parent_category_id (Category ID)
+  // ... other properties
+}
+
+
+SubscriptionPlan "1" -- "*" ServicePackage
+SubscriptionPlan "1" -- "*" AddOn
+
+Subscription "1" -- "*" Order
+Subscription "1" -- "*" AddOn
+Subscription "*" -- "1" SubscriptionPlan
+
+Order "1" -- "*" Fulfillment
+Order "1" -- "*" Item
+Order "1" -- "*" AddOn
+Order "1" -- "*" Offer
+Order "*" -- "1" Provider
+Order "*" -- "1" SLA
+Order "*" -- "1" Quotation
+
+Fulfillment "*" -- "1" FulfillmentState
+
+Provider "1" -- "*" License
+
+Evidence "1" -- "*" Artifact
+Evidence "*" -- "1" Certificate
+Evidence "*" -- "1" License
+
+Deliverable "1" -- "*" Evidence
+
+Catalog "1" -- "*" Category
+
+Category "*" -- "1" Category
+
+@enduml
