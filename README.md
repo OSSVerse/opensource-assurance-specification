@@ -17,7 +17,7 @@ The OASP specification provides a framework for integrating open source assuranc
     - **ordering-api-example.md**: Example for the ordering API.
     - **fulfillment-api-example.md**: Example for the fulfillment API.
     - **post-fulfillment-api-example.md**: Example for the post-fulfillment API.
-  - **glossary.md**: Definitions of terms and acronyms used in the documentation.
+
 
 ## Purpose
 
