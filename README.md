@@ -9,10 +9,9 @@ The OASP specification provides a framework for integrating open source assuranc
 ## Repository Structure
 
 - **/docs**: Contains detailed documentation for the OASP specification.
-  - **introduction.md**: Overview and purpose of the OASP specification.
-  - **requirements.md**: Detailed requirements for implementing the OASP.
-  - **data-models.md**: Definitions of data schemas and models used.
-  - **api-standards.md**: Guidelines and standards for API implementation.
+  - **index.md**: Overview and purpose of the OASP specification.
+  - **Understanding OSSVerse.md**: Detailed requirements for implementing the OASP.
+  - **API Specification.md**: Definitions of data schemas and models used.
   - **examples/**: Practical examples of API requests and responses.
     - **discovery-api-example.md**: Example for the discovery API.
     - **ordering-api-example.md**: Example for the ordering API.
