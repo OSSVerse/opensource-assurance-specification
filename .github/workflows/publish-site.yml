@@ -7,7 +7,8 @@ on:
     paths:
       - docs/**
       - mkdocs.yml
-      - README.md 
+      - requirements.txt
+      - css/**
 jobs:
   deploy:
     runs-on: ubuntu-latest
