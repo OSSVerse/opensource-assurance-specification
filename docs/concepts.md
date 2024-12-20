@@ -85,7 +85,7 @@ A: Deliverables are the tangible outputs produced by OASPs, such as assessment r
 A: A quotation is a formal proposal outlining the price and terms for a service or set of services offered by an OASP. It includes details about the cost, a breakdown of the services included, and any associated terms and conditions.
 
 
-##  BeSLab and O31E
+##  BeSLab
 
 **Q: What is BeSLab, and how does it fit into OSSVerse?**
 
