@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - docs/**
-      - bes_theme/**
       - mkdocs.yml
 jobs:
   deploy:
