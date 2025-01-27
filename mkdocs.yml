@@ -20,7 +20,8 @@ extra_css:
 
 nav:
     - Home: index.md
-    - Understanding OSSVerse: concepts.md
+    - About OSSVerse: concepts.md
+    - OSS-assurance-specification: oss-assurance-specification.md
     - API Reference: 
         - API Summary: api/api-spec-summary.md
         - Schema Summary: schema/schema-summary.md
