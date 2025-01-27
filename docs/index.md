@@ -29,5 +29,3 @@ OSSVerse is built on a foundation of trust and efficiency, enabled by the **OSS-
 **Learn more about the OSS-assurance-specification:**
 
 *   [OSS-assurance-specification](oss-assurance-specification.md) 
-
-This dedicated page provides a comprehensive overview of the specification, its benefits, and how it contributes to the trust and efficiency of the OSSVerse marketplace.
